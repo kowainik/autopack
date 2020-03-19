@@ -1,1 +1,4 @@
 resolver: lts-15.4
+
+extra-deps:
+  - dir-traverse-0.2.2.3
