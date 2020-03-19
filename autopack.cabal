@@ -14,14 +14,16 @@ category:            CustomSetup, Setup, Cabal, Distribution, Development
 build-type:          Simple
 extra-doc-files:     README.md
                      CHANGELOG.md
-tested-with:         GHC == 8.8.3
+tested-with:         GHC == 8.4.4
+                     GHC == 8.6.5
+                     GHC == 8.8.3
 
 source-repository head
   type:                git
   location:            https://github.com/kowainik/autopack.git
 
 common common-options
-  build-depends:       base ^>= 4.13.0.0
+  build-depends:       base >= 4.11.0.0 && < 4.14
 
   ghc-options:         -Wall
                        -Wcompat
@@ -56,6 +58,6 @@ library
   import:              common-options
   hs-source-dirs:      src
   exposed-modules:     Autopack
-  build-depends:       Cabal ^>= 3.0
+  build-depends:       Cabal >= 2.2 && < 3.2
                      , dir-traverse ^>= 0.2
                      , filepath ^>= 1.4
