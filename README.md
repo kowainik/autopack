@@ -10,6 +10,8 @@
 
 Custom Setup to automate package modules discovery.
 
+⚠️ __WARNING:__ `autopack` is in early beta phase. ⚠️
+
 ## Motivation
 
 Usually, when working on a Haskell project, you end up having lots of modules.
