@@ -32,7 +32,6 @@ defaultMainAutoModules = defaultMainWithHooks $
         let dirs = concatMap (hsSourceDirs . libBuildInfo . condTreeData) $
                 maybeToList $ condLibrary pkgDescr
         files <- concat <$> mapM getDirRecursive dirs
-        print files
         let hsFiles = filter (\f -> takeExtension f == ".hs") files
         pure $ map (toModuleName dirs) hsFiles
 
@@ -48,7 +47,7 @@ defaultMainAutoModules = defaultMainWithHooks $
         removeDirPrefix :: [FilePath] -> FilePath
         removeDirPrefix [] = file
         removeDirPrefix (d:ds) = case stripPrefix d file of
-            Just newFile ->  drop 1 newFile
+            Just newFile -> drop 1 newFile
             Nothing      -> removeDirPrefix ds
 
 modulesHooks
@@ -57,15 +56,14 @@ modulesHooks
     -> UserHooks
 modulesHooks getModules hooks = hooks
     { confHook = \(gPackDescr, hBuildInfo) flags -> do
-          modules <- getModules gPackDescr
-          print modules
-          let newGPackDescr = gPackDescr
-                  { condLibrary = condLibrary gPackDescr <&> \condLib -> condLib
-                      { condTreeData = (condTreeData condLib)
-                          { exposedModules = nub $
-                              exposedModules (condTreeData condLib) ++ modules
-                          }
-                      }
-                  }
-          confHook hooks (newGPackDescr, hBuildInfo) flags
+        modules <- getModules gPackDescr
+        let newGPackDescr = gPackDescr
+                { condLibrary = condLibrary gPackDescr <&> \condLib -> condLib
+                    { condTreeData = (condTreeData condLib)
+                        { exposedModules = nub $
+                            exposedModules (condTreeData condLib) ++ modules
+                        }
+                    }
+                }
+        confHook hooks (newGPackDescr, hBuildInfo) flags
     }
