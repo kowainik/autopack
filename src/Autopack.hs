@@ -22,7 +22,20 @@ import Distribution.Types.Library (Library (..))
 import System.Directory.Recursive (getDirRecursive)
 import System.FilePath (dropExtension, splitDirectories, takeExtension)
 
+{- | The main function that should be used in the custom @Setup.hs@ files
+in the following way:
 
+@
+__import__ "Autopack" ('defaultMainAutoModules')
+
+main :: 'IO' ()
+main = 'defaultMainAutoModules'
+@
+
+This function uses custom hooks with 'defaultMainWithHooks' that
+discover all Haskell modules in the @hs-source-dirs@ directories and implies
+this list into @exposed-modules@ of the library.
+-}
 defaultMainAutoModules :: IO ()
 defaultMainAutoModules = defaultMainWithHooks $
     modulesHooks getModules simpleUserHooks
