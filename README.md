@@ -1,8 +1,10 @@
 # autopack
 
+![logo](https://user-images.githubusercontent.com/4276606/77097260-6bdab780-6a08-11ea-8b86-f8e52f3dbbbc.png)
 [![GitHub CI](https://github.com/kowainik/autopack/workflows/CI/badge.svg)](https://github.com/kowainik/autopack/actions)
 [![Build status](https://img.shields.io/travis/kowainik/autopack.svg?logo=travis)](https://travis-ci.org/kowainik/autopack)
 [![Windows build status](https://ci.appveyor.com/api/projects/status/github/kowainik/autopack?branch=master&svg=true)](https://ci.appveyor.com/project/kowainik/autopack)
+
 [![Hackage](https://img.shields.io/hackage/v/autopack.svg?logo=haskell)](https://hackage.haskell.org/package/autopack)
 [![Stackage Lts](http://stackage.org/package/autopack/badge/lts)](http://stackage.org/lts/package/autopack)
 [![Stackage Nightly](http://stackage.org/package/autopack/badge/nightly)](http://stackage.org/nightly/package/autopack)
@@ -102,3 +104,7 @@ out-of-the-box is [`hpack`](https://github.com/sol/hpack). It is the wrapper on
 `Cabal` syntax via `YAML` where there is no need to write modules explicitly.
 They are added to the `exposed-modules` field of the `.cabal` file during the
 YAML to `.cabal` step of the tool work process.
+
+## Acknowledgement
+
+Icons made by [Freepik](http://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/).
