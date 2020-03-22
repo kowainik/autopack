@@ -48,7 +48,7 @@ defaultMainAutoModules = defaultMainWithHooks $
                 maybeToList $ condLibrary pkgDescr
         files <- concat <$> mapM getDirRecursive dirs
         let hsExts = [".hs", ".hsc"]
-        let hsFiles = filter (\(takeExtension -> ext) -> elem ext hsExts) files
+        let hsFiles = filter (\(takeExtension -> ext) -> ext `elem` hsExts) files
         pure $ map (toModuleName dirs) hsFiles
 
     toModuleName :: [FilePath] -> FilePath -> ModuleName
