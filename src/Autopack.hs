@@ -1,3 +1,5 @@
+{-# LANGUAGE ViewPatterns #-}
+
 {- |
 Copyright: (c) 2020 Kowainik
 SPDX-License-Identifier: MPL-2.0
@@ -45,7 +47,8 @@ defaultMainAutoModules = defaultMainWithHooks $
         let dirs = concatMap (hsSourceDirs . libBuildInfo . condTreeData) $
                 maybeToList $ condLibrary pkgDescr
         files <- concat <$> mapM getDirRecursive dirs
-        let hsFiles = filter (\f -> takeExtension f == ".hs") files
+        let hsExts = [".hs", ".hsc"]
+        let hsFiles = filter (\(takeExtension -> ext) -> elem ext hsExts) files
         pure $ map (toModuleName dirs) hsFiles
 
     toModuleName :: [FilePath] -> FilePath -> ModuleName
