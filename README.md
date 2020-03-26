@@ -22,7 +22,8 @@ fine unless you continuously need remembering to add, remove or rename the
 corresponding module line in the `.cabal` file. Sometimes all you want is to
 make `Cabal` dealing with it, so you won't need to patch any files when
 performing any operations on modules. Good news, everyone! This project was
-created precisely to help to solve this particular issue.
+created precisely to help to solve this particular issue, aiding local
+development workflow.
 
 ## How does `autopack` work
 
@@ -42,7 +43,7 @@ For now, all you need to keep in mind to use `autopack`:
  * It uses
    [`hs-source-dirs`](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-hs-source-dirs)
    field to establish where to look up for modules.
- * It can work only with `.hs` extension at the moment.
+ * It can work only with `.hs`/`.hsc` extensions at the moment.
  * It adds all discovered modules into
    [`exposed-modules`](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-library-exposed-modules)
    of the library stanza.
@@ -96,14 +97,17 @@ folders for you during the build.
 
 ## Alternatives
 
-As `Cabal` does not currently provide the feature of automatic modules
-discovery, there are some workarounds for this process. One of them is this
-library — `autopack` that uses `Cabal`'s Setup feature to discover all modules
-during the pre-build stage of `Cabal`. Another tool that provides it
-out-of-the-box is [`hpack`](https://github.com/sol/hpack). It is the wrapper on
+* [`hpack`](https://github.com/sol/hpack): wrapper on
 `Cabal` syntax via `YAML` where there is no need to write modules explicitly.
 They are added to the `exposed-modules` field of the `.cabal` file during the
 YAML to `.cabal` step of the tool work process.
+* [`cabal-fmt`](https://oleg.fi/gists/posts/2019-08-11-cabal-fmt.html): a cabal file formatter than can optionally expand source directories during formatting
+
+## Known limitations
+
+Currently, does not work with [`sdist` command](https://github.com/kowainik/autopack/issues/2), because discovered modules are not added to the cabal file.
+If you need to upload your package to hackage, consider using `cabal-fmt`
+before creating an sdist for uploading to generate a valid .cabal file.
 
 ## Acknowledgement
 
