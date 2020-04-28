@@ -42,7 +42,7 @@ For now, all you need to keep in mind to use `autopack`:
  * It uses
    [`hs-source-dirs`](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-hs-source-dirs)
    field to establish where to look up for modules.
- * It can work only with `.hs` extension at the moment.
+ * It can work only with `.hs` and `.hsc` extensions at the moment.
  * It adds all discovered modules into
    [`exposed-modules`](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-library-exposed-modules)
    of the library stanza.
@@ -103,7 +103,10 @@ during the pre-build stage of `Cabal`. Another tool that provides it
 out-of-the-box is [`hpack`](https://github.com/sol/hpack). It is the wrapper on
 `Cabal` syntax via `YAML` where there is no need to write modules explicitly.
 They are added to the `exposed-modules` field of the `.cabal` file during the
-YAML to `.cabal` step of the tool work process.
+YAML to `.cabal` step of the tool work process. You may also be interested in
+[`cabal-fmt`](https://hackage.haskell.org/package/cabal-fmt) – a non-official
+`.cabal` files formatter than can optionally expand source directories during
+formatting.
 
 ## Acknowledgement
 
