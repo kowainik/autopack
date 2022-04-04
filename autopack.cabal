@@ -59,6 +59,6 @@ library
   import:              common-options
   hs-source-dirs:      src
   exposed-modules:     Autopack
-  build-depends:       Cabal >= 2.2 && < 3.2
+  build-depends:       Cabal >= 2.2 && < 3.7
                      , dir-traverse ^>= 0.2
                      , filepath ^>= 1.4

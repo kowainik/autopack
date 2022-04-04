@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE ViewPatterns #-}
 
 {- |
@@ -13,14 +14,17 @@ module Autopack
     ) where
 
 import Data.Functor ((<&>))
-import Data.List (nub, stripPrefix)
+import Data.List (intercalate, nub, stripPrefix)
 import Data.Maybe (maybeToList)
-import Distribution.ModuleName (ModuleName, fromComponents)
+import Distribution.ModuleName (ModuleName, fromString)
 import Distribution.Simple (UserHooks (..), defaultMainWithHooks, simpleUserHooks)
 import Distribution.Types.BuildInfo (BuildInfo (..))
 import Distribution.Types.CondTree (CondTree (..))
 import Distribution.Types.GenericPackageDescription (GenericPackageDescription (..))
 import Distribution.Types.Library (Library (..))
+#if MIN_VERSION_Cabal(3,6,0)
+import Distribution.Utils.Path (getSymbolicPath)
+#endif
 import System.Directory.Recursive (getDirRecursive)
 import System.FilePath (dropExtension, splitDirectories, takeExtension)
 
@@ -44,8 +48,14 @@ defaultMainAutoModules = defaultMainWithHooks $
   where
     getModules :: GenericPackageDescription -> IO [ModuleName]
     getModules pkgDescr = do
+#if MIN_VERSION_Cabal(3,6,0)
+        let dirs = fmap getSymbolicPath $
+                concatMap (hsSourceDirs . libBuildInfo . condTreeData) $
+                maybeToList $ condLibrary pkgDescr
+#else
         let dirs = concatMap (hsSourceDirs . libBuildInfo . condTreeData) $
                 maybeToList $ condLibrary pkgDescr
+#endif
         files <- concat <$> mapM getDirRecursive dirs
         let hsExts = [".hs", ".hsc"]
         let hsFiles = filter (\(takeExtension -> ext) -> ext `elem` hsExts) files
@@ -58,7 +68,7 @@ defaultMainAutoModules = defaultMainWithHooks $
         -- remove extension
         let noExtFile = dropExtension strippedFile
         -- replace '/' with '.'
-        fromComponents $ splitDirectories noExtFile
+        fromString $ intercalate "." $ splitDirectories noExtFile
       where
         removeDirPrefix :: [FilePath] -> FilePath
         removeDirPrefix [] = file
